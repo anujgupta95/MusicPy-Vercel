@@ -1,0 +1,53 @@
+{% extends 'layout/admin layout.html' %}
+
+{% block element %}
+<div class="container mt-0">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card song-form" style="border: 1px solid black;">
+                {% if error %}
+                <div class="alert alert-danger" style="text-align: center;">{{ error }}</div>
+                {% endif %}
+
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+
+                <div class="card-header" style="text-align: center;">
+                    MusicPy - Edit {{user.name}}'s Song
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" value="{{song.name}}" name="name" readonly>
+                        <br>
+                            <label for="flag">Flagged</label>
+                            <input type="text" class="form-control" value="{{song.flagged}}" name="flagged" readonly>
+                        <br>
+                            <label for="album">Album</label>
+                            <input type="text" class="form-control" value="{{song.album}}" name="album" readonly>
+                        <br>
+                            <label for="release_date">Release Date</label>
+                            <input type="date" class="form-control" name="release_date" value="{{song.release_date}}" readonly>
+                        <br>
+                            <label for="lyrics">Lyrics</label>
+                            <textarea type="text" class="form-control" placeholder="Enter song lyrics" name="lyrics" rows="3" readonly>{{song.lyrics}}</textarea>
+                        </div>
+                        {% if song.flagged == "False" %}
+                            <button type="submit" class="btn custom-button" name="button" value="flag" style="width: 49%;">Flag Song</button>
+                        {% else %}
+                            <button type="submit" class="btn custom-button" name="button" value="unflag" style="width: 49%;">Unflag Song</button>
+                        {% endif %}
+                        <button type="submit" class="btn custom-button" name="button" value="delete" style="width: 49%;">Delete Song</button>
+                        <br>
+                        <br>
+                        <a href="/admin/song/all" class="btn custom-button btn-block">Back to All Songs</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

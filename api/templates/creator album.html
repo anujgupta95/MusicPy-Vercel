@@ -1,0 +1,79 @@
+{% extends 'layout/layout.html' %}
+
+{% block element %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card song-form" style="border: 1px solid black;">
+
+                {% if error %}
+                <div class="alert alert-danger" style="text-align: center;">{{ error }}</div>
+                {% endif %}
+
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+
+                <div class="card-header" style="text-align: center;">
+                    MusicPy - Create New Album
+                </div>
+                <div class="card-body">
+                    <form action="/album/create" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" placeholder="Enter album name" name="name" required>
+                        <br>
+                            <label for="genre">Genre</label>
+                            <input type="text" class="form-control" placeholder="Enter album genre" name="genre" required>
+                        <br>
+                            <label for="artist">Artist</label>
+                            <input type="text" class="form-control" placeholder="Enter song lyrics" name="artist" required>
+                        </div>
+                        <button type="submit" class="btn custom-button btn-block">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-2">
+    <table class="table table-hover">
+        <div class="row">
+            {% if message %}
+            <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+            {% endif %}
+                <div class="col-5">
+                    <h1>Existing Albums</h1>
+                </div>
+                <div class="col-4 offset-3">
+                    <a href="/creator/dashboard" class="btn custom-button btn-block">Back to Dashboard</a>
+                </div>
+        </div>
+        <thead>
+            <tr>
+                <th>Album Name</th>
+                <th>Genre</th>
+                <th>Artist</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for album in albums %}
+                <tr> 
+                    <td>{{album.name}}</td>
+                    <td>{{album.genre}}</td>
+                    <td>{{album.artist}}</td>
+                    {% if album.creator_id==user.id %}
+                        <td><a href="/album/edit/{{album.id}}" class="btn custom-button">Edit/Delete</a></td>
+                    {% else %}
+                        <td><b>Not enough permissions</b></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>    
+    </table>
+</div>
+
+{% endblock %}

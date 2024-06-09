@@ -1,0 +1,62 @@
+{% extends 'layout/layout.html' %}
+
+{% block element %}
+<br>
+    <div class="container container-box mt-2 jumbotron">
+
+        <form class="d-flex row" method="POST">
+            <div class="col-8">
+                <input type="text" class="form-control form-control-lg" placeholder="Create new playlist" name="playlist_name" required>
+            </div>
+            <div class="col-4">
+                <button type="submit" class="btn btn-lg custom-button btn-block">Create</button>
+            </div>
+        </form>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Sr No.</th>
+                    <th>Playlist Name</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            {% for user_playlist in user_playlists_dict.keys() %}
+            <tbody>
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user_playlists_dict[user_playlist] }}</td>
+                    <td><a href="/playlist/delete/{{user_playlist}}/playlist" class="btn custom-button">Delete Playlist</td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+
+    
+    {% for playlist_id in playlist_dict.keys() %}
+    <div class="container container-box mb-3 mt-3" style="padding-top: 10px;">
+        <h2>Playlist - {{ user_playlists_dict[playlist_id] }} </h2>
+        <div class="scroll-container">
+            {% for song in playlist_dict[playlist_id] %}
+                <div class="inner-div  song-div">
+                    <h3 style="text-align: center;">{{song.name}}</h3>
+                    <h5 style="text-align: center; color: #848484; font-size: small;">Album: {{song.album}}</h5>
+                    <h5 style="text-align: center; color: #848484;font-size: small;">Released on: {{song.release_date}}</h5>
+                    <h6 style="text-align: center; color: gray;"><i  class="bi bi-suit-heart-fill"></i> {{song.likes}}</h6>
+                    <textarea rows="3" class="form-control" readonly>{{song.lyrics}}</textarea>
+                    <br>
+                    <audio controls src="static\upload\{{song.id}}.mp3">Your browser doesn't support html audio tag</audio>
+                    {% if song.id in likes_list %}
+                    <a class="btn custom-button btn-block" href="/song/like/{{song.id}}/playlist">Unlike this Song <i class="bi bi-suit-heart-fill"></i></a>
+                    {% else %}
+                    <a class="btn custom-button btn-block" href="/song/like/{{song.id}}/playlist">Like this Song <i class="bi bi-suit-heart-fill"></i></a>
+                    {% endif %}
+                    <a class="btn custom-button btn-block" href="/playlist/edit/{{playlist_id}}/{{song.id}}/playlist">Remove from Playlist({{ user_playlists_dict[playlist_id] }})<i class="bi bi-music-note-list"></i></a>
+                    
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+     
+    {% endblock %}

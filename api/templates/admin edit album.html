@@ -1,0 +1,90 @@
+{% extends 'layout/admin layout.html' %}
+
+{% block element %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card song-form" style="border: 1px solid black;">
+                {% if error %}
+                <div class="alert alert-danger" style="text-align: center;">{{ error }}</div>
+                {% endif %}
+
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+
+                <div class="card-header" style="text-align: center;">
+                    MusicPy - Edit {{album.name}}
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" value="{{album.name}}" name="name" readonly>
+                        <br>
+                            <label for="flag">Flagged</label>
+                            <input type="text" class="form-control" value="{{album.flagged}}" name="flagged" readonly>
+                        <br>
+                            <label for="genre">Genre</label>
+                            <input type="text" class="form-control" name="genre" value="{{album.genre}}" readonly>
+                        <br>
+                            <label for="artist">Artist</label>
+                            <input type="text" class="form-control" name="artist" value="{{album.artist}}" readonly>
+                        <br>
+                            <label for="creator_id">Creator ID</label>
+                            <input type="text" class="form-control" name="creator_id" value="{{album.creator_id}}" readonly>
+                        </div>
+                        {% if album.creator_id != -1 %}
+                            {% if album.flagged == "False" %}
+                                <button type="submit" class="btn custom-button btn-block" name="button" value="flag">Flag Album</button>
+                            {% else %}
+                                <button type="submit" class="btn custom-button btn-block" name="button" value="unflag" >Unflag Album</button>
+                            {% endif %}
+                            <br><br>
+                            <button type="submit" class="btn custom-button" name="button" value="delete_with_songs" style="width: 49%;">Delete Album<br>(with songs)</button>
+                            <button type="submit" class="btn custom-button" name="button" value="delete_without_songs" style="width: 49%;">Delete Album<br>(without songs)</button>
+                            <br>
+                            <br>
+                        {% endif %} 
+                        <a href="/admin/album/all" class="btn custom-button btn-block">Back to All Albums</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mb-5">
+    <div class="row">
+                <h1>Songs in {{album.name}}</h1>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>Song Name</th>
+                <th>Creator ID</th>
+                <th>Song Likes</th>
+                <th style="text-align: center;">Admin Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+            <tr> 
+                <td>{{loop.index}}</td>
+                {% if song.flagged == "True" %}
+                    <td><s>{{song.name}}</s> (Flagged)</td>
+                {% else %}
+                    <td>{{song.name}}</td>
+                {% endif %}
+                <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{song.creator_id}}</td>
+                <td> &nbsp;&nbsp;&nbsp; <i class="bi bi-suit-heart-fill"></i> {{song.likes}}</span></td>
+                <td><a href="/admin/song/edit/{{song.id}}" class="btn btn-block custom-button">Flag/Delete</a></td>
+            </tr>   
+            {% endfor %}
+        </tbody>    
+    </table>
+</div>
+
+{% endblock %}

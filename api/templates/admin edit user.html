@@ -1,0 +1,50 @@
+{% extends 'layout/admin layout.html' %}
+
+{% block element %}
+<div class="container mt-0">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card song-form" style="border: 1px solid black;">
+                {% if error %}
+                <div class="alert alert-danger" style="text-align: center;">{{ error }}</div>
+                {% endif %}
+
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+
+                <div class="card-header" style="text-align: center;">
+                    MusicPy - User {{user.name}} Details
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" value="{{user.name}}" name="name" readonly>
+                        <br>
+                            <label for="flag">Flagged</label>
+                            <input type="text" class="form-control" value="{{user.flagged}}" name="name" readonly>
+                        <br>
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" value="{{user.email}}" readonly>
+                        <br>
+                            <label for="Role">Role</label>
+                            <input type="text" class="form-control" name="role" value="{{user.role}}" readonly>
+                        </div>
+                        {% if user.flagged == "False" %}
+                            <button type="submit" class="btn custom-button" name="button" value="flag" style="width: 49%;">Flag User</button>
+                        {% else %}
+                            <button type="submit" class="btn custom-button" name="button" value="unflag" style="width: 49%;">Unflag User</button>
+                        {% endif %}
+                        <button type="submit" class="btn custom-button" name="button" value="delete" style="width: 49%;">Delete User</button>
+                        <br>
+                        <br>
+                        <a href="/admin/user/all" class="btn custom-button btn-block">Back to All Users</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

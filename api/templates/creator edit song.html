@@ -1,0 +1,55 @@
+{% extends 'layout/layout.html' %}
+
+{% block element %}
+<div class="container mt-0">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card song-form" style="border: 1px solid black;">
+                {% if error %}
+                <div class="alert alert-danger" style="text-align: center;">{{ error }}</div>
+                {% endif %}
+
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+
+                <div class="card-header" style="text-align: center;">
+                    MusicPy - Edit Your Song
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" placeholder="Enter song name" value="{{song.name}}" name="name" required>
+                        <br>
+                            <label for="album">Album</label>
+                            <select type="text" class="form-control" name="album" required>
+                                {% for album in albums %}
+                                    {% if album.name==song.album %}
+                                        <option value="{{album.name}}" selected>{{album.name}}</option>
+                                    {% else %}
+                                        <option value="{{album.name}}">{{album.name}}</option>
+                                    
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        <br>
+                            <label for="release_date">Release Date</label>
+                            <input type="date" class="form-control" name="release_date" value="{{song.release_date}}" required>
+                        <br>
+                            <label for="lyrics">Lyrics</label>
+                            <textarea type="text" class="form-control" placeholder="Enter song lyrics" name="lyrics" rows="3" required>{{song.lyrics}}</textarea>
+                        </div>
+                        <button type="submit" class="btn custom-button" name="button" value="save" style="width: 49%;">Save Changes</button>
+                        <button type="submit" class="btn custom-button" name="button" value="delete" style="width: 49%;">Delete Song</button>
+                        <br>
+                        <br>
+                        <a href="/creator/dashboard" class="btn custom-button btn-block">Back to Dashboard</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

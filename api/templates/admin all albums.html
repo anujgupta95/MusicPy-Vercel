@@ -1,0 +1,49 @@
+{% extends 'layout/admin layout.html' %}
+
+{% block element %}
+
+    <div class="container mt-2">
+        <table class="table table-hover">
+            <div class="row">
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+                    <div class="col-4">
+                        <h1>All Albums</h1>
+                    </div>
+                    <div class="col-4 offset-4">
+                        <a href="/admin/dashboard" class="btn custom-button btn-block">Back to Dashboard</a>
+                    </div>
+            </div>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Genre</th>
+                    <th>Artist</th>
+                    <th>Creator ID</th>
+                    <th>Admin Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for album in albums %}
+                <tr> 
+                    {% if album.flagged == "True" %}
+                        <td><s>{{album.name}}</s> (Flagged)</td>
+                        <td >{{album.genre}}</td>
+                        <td >{{album.artist}}</td>
+                        <td >{{album.creator_id}}</td>
+                        <td><a href="/admin/album/edit/{{album.id}}" class="btn custom-button">Unflag/Delete</a></td>
+                    {% else %}
+                        <td>{{album.name}}</td>
+                        <td >{{album.genre}}</td>
+                        <td >{{album.artist}}</td>
+                        <td >{{album.creator_id}}</td>
+                        <td><a href="/admin/album/edit/{{album.id}}" class="btn custom-button">Flag/Delete</a></td>
+                    {% endif %}
+
+                </tr>   
+                {% endfor %}
+            </tbody>    
+        </table>
+    </div>
+{% endblock %}

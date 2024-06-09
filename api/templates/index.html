@@ -1,0 +1,86 @@
+{% extends 'layout/layout.html' %}
+
+{% block element %}
+<br>
+<div class="hero bg-dark bg-gradient text-white text-center py-5 container container-box">
+    <div class="container">
+        <h1 class="display-6 animate__animated animate__fadeInUp">Hello, {{user.name}}!</h1>
+        <h2 class="display-6 animate__animated animate__fadeInUp">Welcome to MusicPy</h2>
+        <p class="lead animate__animated animate__fadeInUp">Discover and share your favorite music.</p>
+    </div>
+</div>
+
+<div id="search_results">
+    {% if trending_songs %}
+    <div class="container container-box mb-3 mt-3" style="padding-top: 10px;">
+        <h2>Top 10 Trending Songs</h2>
+        <div class="scroll-container">
+            {% for song in trending_songs %}
+                <div class="inner-div song-div">
+                    <h3 style="text-align: center;">{{song.name}}</h3>
+                    <h5 style="text-align: center; color: #848484; font-size: small;">Album: {{song.album}}</h5>
+                    <h5 style="text-align: center; color: #848484; font-size: small;">Released on: {{song.release_date}}</h5>
+                    <h6 style="text-align: center; color: gray;"><i  class="bi bi-suit-heart-fill"></i> {{song.likes}}</h6>
+                    <textarea rows="3" class="form-control" readonly>{{song.lyrics}}</textarea>
+                    <br>
+                    <audio controls loop src="static\upload\{{song.id}}.mp3">Your browser doesn't support html audio tag</audio>
+                    {% if song.id in likes_list %}
+                        <a class="btn custom-button btn-block" href="/song/like/{{song.id}}/index">Unlike this Song <i class="bi bi-suit-heart-fill"></i></a>
+                    {% else %}
+                        <a class="btn custom-button btn-block" href="/song/like/{{song.id}}/index">Like this Song <i class="bi bi-suit-heart-fill"></i></a>
+                    {% endif %}
+
+
+                    {% for userplaylist_id in user_playlists_dict.keys() %}
+                        {% if song in playlist_dict[userplaylist_id] %}
+                            <a class="btn custom-button btn-block" href="/playlist/edit/{{userplaylist_id}}/{{song.id}}/index">Remove from Playlist({{ user_playlists_dict[userplaylist_id] }})<i class="bi bi-music-note-list"></i></a>
+                        {% else %}
+                            <a class="btn custom-button btn-block" href="/playlist/edit/{{userplaylist_id}}/{{song.id}}/index">Add to Playlist({{ user_playlists_dict[userplaylist_id] }})<i class="bi bi-music-note-list"></i></i></a>
+                        {% endif %}
+                    {% endfor %}
+                    
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% for album in albums_dict.keys() %}
+    <div class="container container-box mb-3 mt-3" style="padding-top: 10px;">
+        <h2>{{album}}</h2>
+        <div class="scroll-container">
+            {% for song in albums_dict[album] %}
+                <div class="inner-div song-div">
+                    <h3 style="text-align: center;">{{song.name}}</h3>
+                    <h5 style="text-align: center; color: #848484; font-size: small;">Album: {{song.album}}</h5>
+                    <h5 style="text-align: center; color: #848484;font-size: small;">Released on: {{song.release_date}}</h5>
+                    <h6 style="text-align: center; color: gray;"><i  class="bi bi-suit-heart-fill"></i> {{song.likes}}</h6>
+                    <textarea rows="3" class="form-control" readonly>{{song.lyrics}}</textarea>
+                    <br>
+                    <audio controls loop src="static\upload\{{song.id}}.mp3">Your browser doesn't support html audio tag</audio>
+                    {% if song.id in likes_list %}
+                        <a class="btn custom-button btn-block" href="/song/like/{{song.id}}/index">Unlike this Song <i class="bi bi-suit-heart-fill"></i></a>
+                    {% else %}
+                        <a class="btn custom-button btn-block" href="/song/like/{{song.id}}/index">Like this Song <i class="bi bi-suit-heart-fill"></i></a>
+                    {% endif %}
+
+
+                    {% for userplaylist_id in user_playlists_dict.keys() %}
+                        {% if song in playlist_dict[userplaylist_id] %}
+                            <a class="btn custom-button btn-block" href="/playlist/edit/{{userplaylist_id}}/{{song.id}}/index">Remove from Playlist({{ user_playlists_dict[userplaylist_id] }})<i class="bi bi-music-note-list"></i></a>
+                        {% else %}
+                            <a class="btn custom-button btn-block" href="/playlist/edit/{{userplaylist_id}}/{{song.id}}/index">Add to Playlist({{ user_playlists_dict[userplaylist_id] }})<i class="bi bi-music-note-list"></i></i></a>
+                        {% endif %}
+                    {% endfor %}
+                    
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

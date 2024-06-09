@@ -1,0 +1,51 @@
+{% extends 'layout/admin layout.html' %}
+
+
+{% block element %}
+<br>
+<br>
+
+    <div class="container container-box">
+        <table class="table table-hover">
+            <div class="row">
+                {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+                    <div class="col-4">
+                        <h1>All Users</h1>
+                    </div>
+                    <div class="col-3 offset-5">
+                        <a href="/admin/dashboard" class="btn custom-button btn-block">Back to Dashboard</a>
+                    </div>
+            </div>
+            <thead>
+                <tr>
+                    <th>Sr No.</th>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>User Role</th>
+                    <th>Admin Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr> 
+                    <td>{{loop.index}}</td>
+                    {% if user.flagged == "True" %}
+                        <td><s>{{user.id}}</s> (Flagged)</td>
+                        <td >{{user.name}}</td>
+                        <td >{{user.role}}</td>
+                        <td><a href="/admin/user/edit/{{user.id}}" class="btn custom-button">Unflag/Delete</a></td>
+                    {% else %}
+                        <td>{{user.id}}</td>
+                        <td >{{user.name}}</td>
+                        <td >{{user.role}}</td>
+                        <td><a href="/admin/user/edit/{{user.id}}" class="btn custom-button btn-block">Flag/Delete</a></td>
+                    {% endif %}
+
+                </tr>   
+                {% endfor %}
+            </tbody>    
+        </table>
+    </div>
+{% endblock %}

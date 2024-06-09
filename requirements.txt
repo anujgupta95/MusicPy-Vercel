@@ -1,0 +1,7 @@
+bcrypt
+fonttools
+matplotlib
+numpy
+requests
+flask
+flask_sqlalchemy

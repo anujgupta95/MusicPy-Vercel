@@ -1,0 +1,73 @@
+{% extends 'layout/admin layout.html' %}
+
+{% block element %}
+    <div class="container container-box mt-3">
+        <h1>Admin Dashboard</h1>
+        <div class="row justify-content-around mb-3">
+            <div class="col-5 box-3">
+                <h4 style="font-size:2vw;">Total Songs</h2>
+                <h3 style="font-size:5vw;">{{ count["songs_count"] }}</h3>
+                <h6 style="font-size: 1vw; color: gray;">({{ count["flagged_songs"]}} songs flagged)</h6>
+            </div>
+            <div class="col-5 box-3">
+                <h2 style="font-size:2vw;">Normal Users</h2>
+                <h3 style="font-size:5vw;">{{ count["users_count"] }}</h3>
+                <h6 style="font-size: 1vw; color: gray;">({{ count["flagged_users"]}} users flagged)</h6>
+            </div>
+        </div>
+        <div class="row justify-content-around mb-3">
+            <div class="col-5 box-3">
+                <h2 style="font-size:2vw;">Creators</h2>
+                <h3 style="font-size:5vw;">{{ count["creators_count"] }}</h3>
+                <h6 style="font-size: 1vw; color: gray;">({{ count["flagged_creators"]}} creators flagged)</h6>
+            </div>
+            <div class="col-5 box-3">
+                <h2 style="font-size:2vw;">Albums</h2>
+                <h3 style="font-size:5vw;">{{ count["albums_count"]-1 }}</h3>
+                <!-- <h6 style="font-size: 1vw; color: gray;">({{ count["flagged_albums"]}} albums flagged)</h6> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3 mb-5">
+        <div class="row">
+            {% if message %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+            {% endif %}
+                <div class="col-5">
+                    <h1>Trending Songs</h1>
+                </div>
+                <div class="col-3 offset-4">
+                    <a href="/admin/song/all" class="btn btn-block custom-button">All Songs</a>
+                </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Sr No.</th>
+                    <th>Song Name</th>
+                    <th>Song Album</th>
+                    <th>Creator ID</th>
+                    <th>Song Likes</th>
+                    <th style="text-align: center;">Admin Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs %}
+                <tr> 
+                    <td>{{loop.index}}</td>
+                    {% if song.flagged == "True" %}
+                        <td><s>{{song.name}}</s> (Flagged)</td>
+                    {% else %}
+                        <td>{{song.name}}</td>
+                    {% endif %}
+                    <td>{{song.album}}</td>
+                    <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{song.creator_id}}</td>
+                    <td> &nbsp;&nbsp;&nbsp; <i class="bi bi-suit-heart-fill"></i> {{song.likes}}</span></td>
+                    <td><a href="/admin/song/edit/{{song.id}}" class="btn btn-block custom-button">Flag/Delete</a></td>
+                </tr>   
+                {% endfor %}
+            </tbody>    
+        </table>
+    </div>
+{% endblock %}

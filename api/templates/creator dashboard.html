@@ -1,0 +1,62 @@
+{% extends 'layout/layout.html' %}
+
+{% block element %}
+<br>
+<div class="container container-box mt-5">
+    <h1>Your Dashboard</h1>
+    <div class="row justify-content-around">
+        <div class="col-3 box-3">
+            <h4 style="font-size:2vw;">Songs Uploaded</h2>
+            <h3 style="font-size:5vw;">{{ count["songs_count"] }}</h3>
+            <h5 style="font-size:2vw; color: gray;">({{count["flagged_songs_count"]}} songs flagged)</h5>
+        </div>
+        <div class="col-3 box-3">
+            <h2 style="font-size:2vw;">Average Likes</h2>
+            <h3 style="font-size:5vw;">{{ count["avg_rating"] }}</h3>
+        </div>
+        <div class="col-3 box-3">
+            <h2 style="font-size:2vw;">Your Albums</h2>
+            <h3 style="font-size:5vw;">{{ count["albums_count"] }}</h3>
+        </div>
+    </div>
+    <br>
+</div>
+
+<div class="container container-box mt-2">
+    <div class="row">
+        {% if message %}
+        <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+        {% endif %}
+            <div class="col-5">
+                <h1>Your Uploads</h1>
+            </div>
+            <div class="col-4 offset-3">
+                <a class="btn btn-block custom-button" href="/upload/song">Upload New Song</a>
+            </div>
+    </div>
+    <table class="table table-hover" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>Sr No.</th>
+                <th>Song Name</th>
+                <th>Likes</th>
+                <th style="text-align: center;">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+            <tr>
+                <td>{{loop.index}}</td>
+                {% if song.flagged == "True" %}
+                <td><s>{{song.name}}</s> (Flagged)</td>
+                {% else %}
+                    <td>{{song.name}}</td>
+                {% endif %}
+                <td> <i class="bi bi-suit-heart-fill"></i> {{song.likes}}</td>
+                <td><a href="/song/edit/{{song.id}}" class="btn custom-button btn-block">Edit/View/Delete</a></td>
+            </tr>   
+            {% endfor %}
+        </tbody>    
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+.custom-button {
+    background-color: #212529;
+    color: #ffffffb5;
+}
+.custom-button:hover{
+    background-color: white;
+    color: #212529;
+    border: 2px solid black;
+}
+
+
+.login-form {
+    margin: 100px auto;
+    max-width: 400px;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.login-link a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card-header{
+    text-align: center;
+}
+
+.song-form {
+    margin: 100px auto;
+    max-width: 500px;
+}
+::selection{
+    color: black;
+    background-color: lightgray;
+    text-decoration-style: dashed;
+}
+
+.container-box{
+    border: 2px solid black;
+    border-radius: 10px;
+    padding-top: 10px;
+}
+
+.box-3{
+    border: 1px solid black;
+    border-radius: 10px;
+    padding-top: 10px;
+    text-align: center;
+}
+
+div.scroll-container {
+    overflow: auto;
+    padding: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+div.inner-div {
+    background-color: rgb(238, 238, 238);
+    width: 250px;
+    height: 250px;
+    padding: 10px;
+    margin: 10px;
+}
+
+div.song-div{
+    width: 320px;
+    height: auto;
+    border: 1px solid black;
+    border-radius: 8px;
+}
